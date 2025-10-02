@@ -30,9 +30,6 @@ app.get("/", (req, res) => {
   res.json("Hello I am here for you");
 });
 
-app.get("/user", (req, res) => {
-  res.json("Hello I am a new User here");
-});
 // Routes
 app.use("/api/auth", authRouter);
 app.use(authMiddleware);
