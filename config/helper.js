@@ -58,7 +58,7 @@ function formatISTDate(dateInput = new Date()) {
 }
 
 const postmanOnlyEndpoints = ["/api/v1/testpostman"];
-const bothAccessEndpoints = ["/api/wishlist", "/decrypt"];
+const bothAccessEndpoints = ["/api/wishlist", "/decrypt","/api/products/"];
 
 module.exports = {
   getISTDate,

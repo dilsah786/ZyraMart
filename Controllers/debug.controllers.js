@@ -3,9 +3,6 @@ const { decryptData } = require("../utils/securityUtils");
 exports.decryptTest = (req, res) => {
   try {
     const { encryptedReqBody } = req.body;
-
-    console.log(req.body);
-
     if (!encryptedReqBody) {
       return res.status(400).json({
         success: false,

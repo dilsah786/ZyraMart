@@ -12,7 +12,7 @@ exports.addRecentlyViewedProducts = async (req, res, next) => {
     }
 
     await recViewed.addProduct(productId);
-    res.json({
+    return sendEncryptedResponse(res, {
       success: true,
       message: "Product added to recently viewed",
       recViewed,
@@ -56,7 +56,7 @@ exports.getRecentlyViewedProducts = async (req, res, next) => {
     recViewed.createdAt = formatISTDate(recViewed.createdAt);
     recViewed.updatedAt = formatISTDate(recViewed.updatedAt);
 
-    res.json({
+    return sendEncryptedResponse(res, {
       success: true,
       message: "All recently viewed product",
       recViewedProducts: recViewed,

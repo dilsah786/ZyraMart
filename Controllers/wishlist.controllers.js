@@ -54,7 +54,6 @@ exports.getWishlistProducts = async (req, res, next) => {
       allWishListProducts: formattedWishlistProducts,
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -171,7 +170,7 @@ exports.removeWishListProduct = async (req, res, next) => {
       }
     );
 
-    res.json({
+    return sendEncryptedResponse(res, {
       success: true,
       message: "Product removed from the wishlist",
       totalRecords: totalWishlistProducts,

@@ -1,5 +1,6 @@
 const { formatISTDate } = require("../config/helper");
 const { ProductModel } = require("../Models/Product");
+const { sendEncryptedResponse } = require("../utils/responseEncryptDecrypt");
 
 exports.createProduct = async (req, res, next) => {
   try {
@@ -48,7 +49,7 @@ exports.getProductsPagination = async (req, res, next) => {
       updatedAt: formatISTDate(ele.updatedAt),
     }));
 
-    res.json({
+    return sendEncryptedResponse(res, {
       message:
         allProducts.length > 0
           ? "Here is all your Products list"
@@ -69,7 +70,7 @@ exports.getSingleProductDetails = async (req, res, next) => {
 
     const productDetails = await ProductModel.findById({ _id: id });
 
-    res.json({
+    return sendEncryptedResponse(res, {
       message: productDetails
         ? "Here is your Product Details"
         : "No Product Found",
@@ -97,7 +98,7 @@ exports.deleteProduct = async (req, res, next) => {
         .status(403);
     }
 
-    res.json({
+    return sendEncryptedResponse(res, {
       success: true,
       message: ` ${deletedProduct.name} Product Removed Successfully`,
       deletedProduct,
@@ -129,7 +130,7 @@ exports.updateProduct = async (req, res, next) => {
         .status(403);
     }
 
-    res.json({
+    return sendEncryptedResponse(res, {
       success: true,
       message: "Product updated successfully",
       updatedProduct,

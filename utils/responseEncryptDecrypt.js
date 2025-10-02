@@ -17,9 +17,6 @@ const sendEncryptedResponse = (res, data) => {
 // Decrypt request body in middleware
 const decryptRequestBody = (req, res, next) => {
   try {
-
-    console.log(req)
-
     if (req.body.encryptedReqBody) {
       req.body = JSON.parse(decryptData(req.body.encryptedReqBody));
     }

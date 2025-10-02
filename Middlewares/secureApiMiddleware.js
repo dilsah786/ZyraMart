@@ -53,7 +53,7 @@ const secureMiddleware = ({
 
       // Decrypt request if POST/PATCH/PUT
       if (
-        ["POST", "PATCH", "PUT"].includes(req.method) &&
+        ["POST", "PATCH", "PUT",].includes(req.method) &&
         req.body.encryptedReqBody &&
         !req.originalUrl.includes("/api/decrypt")
       ) {
