@@ -16,6 +16,7 @@ const { secureMiddleware } = require("./Middlewares/secureApiMiddleware");
 
 const debugController = require("./Controllers/debug.controllers");
 const { cartRouter } = require("./routes/cart.routes");
+const { addressRouter } = require("./routes/address.routes");
 
 require("dotenv").config();
 
@@ -38,6 +39,7 @@ app.use("/api/products", productRouter);
 app.use("/api/wishlist", wishlistRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/recentproduct", recentlyViewedProdRouter);
+app.use("/api/address", addressRouter);
 // app.use("/api/categories", require("./routes/category.routes"));
 // app.use("/api/orders", require("./routes/order.routes"));
 // app.use("/api/coupons", require("./routes/coupon.routes"));
