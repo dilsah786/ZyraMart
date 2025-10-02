@@ -1,13 +1,22 @@
 const express = require("express");
 const orderRouter = express.Router();
-const orderController = require("../controllers/orderController");
-const authMiddleware = require("../middleware/auth");
-const autoOrderLogger = require("../middleware/autoOrderLogger");
+const orderController = require("../Controllers/order.controllers");
 
-orderRouter.use(authMiddleware("customer"), autoOrderLogger());
+// orderRouter.use(authMiddleware("customer"), autoOrderLogger());
 
-orderRouter.post("/", orderController.placeOrder);
+// Place a new order
+orderRouter.post("/", orderController.createOrder);
+
+// Get all orders of a user
 orderRouter.get("/", orderController.getUserOrders);
+
+// Get a single order
 orderRouter.get("/:id", orderController.getOrderById);
 
-module.exports = orderRouter;
+// Update order status (admin)
+orderRouter.patch("/:id/status", orderController.updateOrderStatus);
+
+// cancel Order
+orderRouter.patch("/cancel/:orderId", orderController.cancelOrder);
+
+module.exports = { orderRouter };

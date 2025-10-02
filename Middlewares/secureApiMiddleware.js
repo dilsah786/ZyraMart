@@ -52,12 +52,17 @@ const secureMiddleware = ({
       req.userId = decoded.id;
 
       // Decrypt request if POST/PATCH/PUT
-      if (
-        ["POST", "PATCH", "PUT"].includes(req.method) &&
-        req.body.encryptedReqBody &&
-        !req.originalUrl.includes("/api/decrypt")
-      ) {
-        req.body = JSON.parse(decryptData(req.body.encryptedReqBody));
+      if (["POST", "PATCH", "PUT"].includes(req.method)) {
+        if (req.body?.encryptedReqBody) {
+          try {
+            req.body = JSON.parse(decryptData(req.body.encryptedReqBody));
+          } catch (e) {
+            return res
+              .status(400)
+              .json({ message: "Invalid encrypted payload" });
+          }
+        }
+        // else, req.body remains as normal JSON
       }
 
       // CRC validation
