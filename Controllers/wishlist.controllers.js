@@ -16,43 +16,50 @@ exports.getWishlistProducts = async (req, res, next) => {
     })
       .populate("items.productId")
       .lean();
-
-    if (allWishListProducts.length == 0) {
-      return res
-        .json({
-          success: false,
-          message: "No Product found",
-          allWishListProducts: [],
-        })
-        .status(404);
-    }
-
-    const totalWishlistProducts = allWishListProducts.items.length;
-    const formattedWishlistProducts = allWishListProducts.items.map(
-      (wishlistItem) => {
-        return {
-          ...wishlistItem,
-          addedAt: formatISTDate(wishlistItem.addedAt),
-          productId: wishlistItem.productId
-            ? {
-                ...wishlistItem.productId, // spread product details
-                createdAt: formatISTDate(wishlistItem.productId.createdAt),
-                updatedAt: formatISTDate(wishlistItem.productId.updatedAt),
-              }
-            : null,
-        };
+    if (allWishListProducts) {
+      if (allWishListProducts.length == 0) {
+        return res
+          .json({
+            success: false,
+            message: "No Product found",
+            allWishListProducts: [],
+          })
+          .status(404);
       }
-    );
 
-    const totalPages = Math.ceil(totalWishlistProducts / limit);
+      const totalWishlistProducts = allWishListProducts.items.length;
+      const formattedWishlistProducts = allWishListProducts.items.map(
+        (wishlistItem) => {
+          return {
+            ...wishlistItem,
+            addedAt: formatISTDate(wishlistItem.addedAt),
+            productId: wishlistItem.productId
+              ? {
+                  ...wishlistItem.productId, // spread product details
+                  createdAt: formatISTDate(wishlistItem.productId.createdAt),
+                  updatedAt: formatISTDate(wishlistItem.productId.updatedAt),
+                }
+              : null,
+          };
+        }
+      );
 
-    return sendEncryptedResponse(res, {
-      success: true,
-      message: "Here are you wishlist items list",
-      totalRecords: totalWishlistProducts,
-      totalPages,
-      allWishListProducts: formattedWishlistProducts,
-    });
+      const totalPages = Math.ceil(totalWishlistProducts / limit);
+
+      return sendEncryptedResponse(res, {
+        success: true,
+        message: "Here are you wishlist items list",
+        totalRecords: totalWishlistProducts,
+        totalPages,
+        allWishListProducts: formattedWishlistProducts,
+      });
+    } else {
+      res.json({
+        success: false,
+        message: "No items",
+        allWishListProducts: [],
+      });
+    }
   } catch (error) {
     next(error);
   }

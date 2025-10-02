@@ -57,14 +57,41 @@ function formatISTDate(dateInput = new Date()) {
   return formatted;
 }
 
+function getRandomDeliveryDate() {
+  const today = new Date();
+  const maxDays = 10;
+
+  // Generate random offset in days (0–10)
+  const randomOffset = Math.floor(Math.random() * (maxDays + 1));
+
+  // Calculate delivery date
+  const deliveryDate = new Date(today);
+  deliveryDate.setDate(today.getDate() + randomOffset);
+
+  // Format options
+  const options = { weekday: "long", day: "numeric", month: "short" };
+
+  // Return formatted date string (e.g., "Monday 8 Oct")
+  return deliveryDate.toLocaleDateString("en-US", options);
+}
+
+// Example usage:
+console.log(getRandomDeliveryDate());
+
 const postmanOnlyEndpoints = ["/api/v1/testpostman"];
-const bothAccessEndpoints = ["/api/wishlist", "/decrypt","/api/products/"];
+const bothAccessEndpoints = [
+  "/api/wishlist",
+  "/decrypt",
+  "/api/products/",
+  "/api/cart",
+];
 
 module.exports = {
   getISTDate,
   generateOTP,
   sendEmailOTP,
   formatISTDate,
+  getRandomDeliveryDate,
   postmanOnlyEndpoints,
   bothAccessEndpoints,
 };

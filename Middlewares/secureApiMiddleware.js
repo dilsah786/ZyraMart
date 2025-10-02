@@ -14,7 +14,7 @@ const secureMiddleware = ({
   return async (req, res, next) => {
     try {
       const origin = req.headers.origin || req.headers.referer || "";
-      const isPostman = !origin; // No origin = Postman / curl
+      const isPostman = origin; // No origin = Postman / curl
 
       // Determine endpoint type
       const endpoint = req.originalUrl;
@@ -53,7 +53,7 @@ const secureMiddleware = ({
 
       // Decrypt request if POST/PATCH/PUT
       if (
-        ["POST", "PATCH", "PUT",].includes(req.method) &&
+        ["POST", "PATCH", "PUT"].includes(req.method) &&
         req.body.encryptedReqBody &&
         !req.originalUrl.includes("/api/decrypt")
       ) {

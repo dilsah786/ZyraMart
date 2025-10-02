@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema(
     currency: { type: String, enum: ["USD", "INR"], default: "INR" },
     stock: { type: Number, min: 1, required: true }, // available quantity
     brand: { type: String, required: false },
-
+    seller: { type: String },
     // Variants for color, size, storage, etc.
     variants: [
       {
